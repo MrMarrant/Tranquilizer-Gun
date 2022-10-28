@@ -63,6 +63,7 @@ function ENT:Initialize()
 	self:SetSolid( SOLID_VPHYSICS ) 
 	self:SetUseType(SIMPLE_USE)
 	self.IsTouch = false
+	--! TODO : A virer ou à remplacer par une ConVar avec possibilité de le modifier dans le menu des props (Non utilisé pour le moment)
 	self.jobNotAffected = { ---- Jobs that are not affected by the tranquilizer.
     "IAA",
 	"UIAA",
@@ -91,7 +92,7 @@ function ENT:Touch(ent)
 		self.IsTouch = true
 		-- Check if the player is not already tired or SCP 035.
 		if (ent:IsPlayer() and 
-		!table.HasValue(self.jobNotAffected, team.GetName( ent:Team() )) and 
+		-- !table.HasValue(self.jobNotAffected, team.GetName( ent:Team() )) and 
 		!ent.IsTired and 
 		!ent.MaskControl) then
 			self:EmitSound("physics/flesh/flesh_impact_bullet"..math.random(1,5)..".wav", 95, 100)
