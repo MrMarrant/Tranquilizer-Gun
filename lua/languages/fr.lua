@@ -1,0 +1,5 @@
+LANGUAGE.woke_up = "se réveille et met quelques secondes à reprendre ses esprits."
+LANGUAGE.state_sleep_1 = "se sent lourd et fatigué."
+LANGUAGE.state_sleep_2 = "a des difficultés à marcher."
+LANGUAGE.state_sleep_3 = "tente de résister au sommeil."
+LANGUAGE.state_sleep_4 = "s'endort profondément."
