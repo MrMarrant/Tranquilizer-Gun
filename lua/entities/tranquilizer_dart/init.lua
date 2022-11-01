@@ -2,10 +2,17 @@ AddCSLuaFile("shared.lua")
 
 include("shared.lua")
 
+local BlurryVisionTired = "BlurryVisionTired"
+local DelayBlurryVision = "DelayBlurryVision"
+local ResetBlurryVisionTired = "ResetBlurryVisionTired"
+
+util.AddNetworkString( BlurryVisionTired )
+util.AddNetworkString( DelayBlurryVision )
+util.AddNetworkString( ResetBlurryVisionTired )
 
 -- Set a player to sleep, index start to 1
 local function SetSleepPlayer(victim, timeToGetTired, timeToSleep, step, tableText, index)
-	if (index == 1) then 
+	if (index == 1) then
 		victim.IsTired = true 
 		net.Start(DelayBlurryVision)
 		net.WriteFloat(timeToGetTired)
@@ -39,7 +46,7 @@ local function SetSleepPlayer(victim, timeToGetTired, timeToSleep, step, tableTe
 					-- When a player spawns, his movement speed cannot be changed immediately afterwards.
 					timer.Simple(0.1, function ()
 						if !IsValid(victim) then return end
-						victim:Say("/me "..bibi.Translate( "woke_up" ))
+						victim:Say("/me "..BIBI.Translate( "woke_up" ))
 						victim:SetWalkSpeed(1)
 						victim:SetRunSpeed(1)
 						timer.Simple(5, function ()
@@ -97,10 +104,10 @@ function ENT:Touch(ent)
 		!ent.MaskControl) then
 			self:EmitSound("physics/flesh/flesh_impact_bullet"..math.random(1,5)..".wav", 95, 100)
 			local PrintTired = {
-				[1] = bibi.Translate( "state_sleep_1" ),
-				[2] = bibi.Translate( "state_sleep_2" ),
-				[3] = bibi.Translate( "state_sleep_3" ),
-				[4] = bibi.Translate( "state_sleep_4" ),
+				[1] = BIBI.Translate( "state_sleep_1" ),
+				[2] = BIBI.Translate( "state_sleep_2" ),
+				[3] = BIBI.Translate( "state_sleep_3" ),
+				[4] = BIBI.Translate( "state_sleep_4" ),
 			}
 			SetSleepPlayer(ent, 90, 180, 4, PrintTired, 1)
 			self:SetParent( ent )
@@ -114,3 +121,25 @@ function ENT:Touch(ent)
 		end
 	end
 end
+
+-- Function called to remove an blurry vision on the client side.
+function SendResetBlurryVisionTired(victim)
+	net.Start(ResetBlurryVisionTired)
+	net.WriteBool(true)
+	net.Send(victim)
+end
+
+-- Function called to remove all effect on death or changed team
+function RemoveEffectGettingTired(victim)
+    if timer.Exists("getting_tired_"..victim:SteamID()) then
+        timer.Remove("getting_tired_"..victim:SteamID())
+    end
+    if timer.Exists("getting_sleepy_"..victim:SteamID()) then
+        timer.Remove("getting_sleepy_"..victim:SteamID())
+	end
+    victim.IsTired = false
+    SendResetBlurryVisionTired(victim)
+end
+
+hook.Add( "PlayerDeath", "PlayerDeath.RemoveTiredEffectGunTranquilizer", RemoveEffectGettingTired )
+hook.Add( "PlayerChangedTeam", "PlayerChangedTeam.RemoveTiredEffectGunTranquilizer", RemoveEffectGettingTired )

@@ -1,6 +1,5 @@
-bibi.Language = {}
-
 LANGUAGE = {}
+BIBI = {}
 HandledLanguage = {
     "fr",
     "en"
@@ -20,11 +19,9 @@ end
 
 include( "languages/" .. langUser .. ".lua" )
 if SERVER then AddCSLuaFile( "languages/" .. langUser .. ".lua" ) end
-bibi.Language = LANGUAGE
-LANGUAGE = nil
 
-assert( bibi.Language, "[Tranquilizer Gun] Language not found" )
+assert( LANGUAGE, "[Tranquilizer Gun] Language not found" )
 
-function bibi.Translate( trans, ... )
-	return string.format( bibi.Language[ trans ] or trans, ... )
+function BIBI.Translate( trans, ... )
+	return string.format( LANGUAGE[ trans ] or trans, ... )
 end
