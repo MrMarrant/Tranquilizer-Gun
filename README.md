@@ -4,6 +4,9 @@ SWEP original réalisé par moi-même dans le cadre d'un projet de serveur.<br>
 C'est addon contient l'arme fusil snipeur ainsi que l'entité qui fait office de munitions pour l'arme à feu.<br>
 <br>
 
+### 🧩 GameModes
+- DarkRp
+
 ### 📌 Dépendances
 - [[ArcCW] [Beta] Firearms: Source 2 (FA:S 2.0)](https://steamcommunity.com/sharedfiles/filedetails/?id=2274508982)
 
