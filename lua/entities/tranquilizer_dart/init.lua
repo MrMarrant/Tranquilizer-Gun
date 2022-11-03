@@ -98,7 +98,7 @@ function ENT:Touch(ent)
 		self:SetMoveType( MOVETYPE_NONE )
 		self.IsTouch = true
 		-- Check if the player is not already tired or SCP 035.
-		if (ent:IsPlayer() and 
+		if (
 		-- !table.HasValue(self.jobNotAffected, team.GetName( ent:Team() )) and 
 		!ent.IsTired and 
 		!ent.MaskControl) then
@@ -109,7 +109,7 @@ function ENT:Touch(ent)
 				[3] = BIBI.Translate( "state_sleep_3" ),
 				[4] = BIBI.Translate( "state_sleep_4" ),
 			}
-			SetSleepPlayer(ent, 90, 180, 4, PrintTired, 1)
+			SetSleepPlayer(ent, 60, 60, 4, PrintTired, 1)
 			self:SetParent( ent )
 			timer.Simple(5, function ()
 				self:Remove()
