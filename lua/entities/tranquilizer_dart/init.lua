@@ -72,9 +72,7 @@ function ENT:Initialize()
 	self.IsTouch = false
 	--! TODO : A virer ou à remplacer par une ConVar avec possibilité de le modifier dans le menu des props (Non utilisé pour le moment)
 	self.jobNotAffected = { ---- Jobs that are not affected by the tranquilizer.
-    "IAA",
-	"UIAA",
-	"Membre du personnel Process",
+	
 	"SCP 999",
 	"SCP 131",
 	"SCP 049",
@@ -122,6 +120,61 @@ function ENT:Touch(ent)
 	end
 end
 
+if CLIENT then
+    net.Receive(BlurryVisionTired, function ( )
+        ply = LocalPlayer()
+        tableData = net.ReadTable()
+        ply.Step = tableData[1]
+        ply.Index = tableData[2]
+        if (tableData[1] == tableData[2]) then
+            ply.BlurryShockTired = false
+            ply.Step = nil
+            ply.Index = nil
+        else
+            ply.BlurryShockTired = true
+        end
+    end)
+
+    net.Receive(DelayBlurryVision, function ( )
+        ply = LocalPlayer()
+        delay = net.ReadFloat()
+        timer.Simple(delay, function()
+            if !IsValid(ply) then return end
+            ply.BlurryShockTired = false
+        end)
+    end)
+
+    net.Receive(ResetBlurryVisionTired, function ( )
+        Check = net.ReadBool()
+        local ply = LocalPlayer()
+        if (Check and ply.BlurryShockTired) then
+            ply.BlurryShockTired = nil
+        end
+    end)
+    
+    function ShockEffectTired()
+        local ply = LocalPlayer()
+        local curTime = FrameTime()
+        if !ply.AddAlpha then ply.AddAlpha = 1 end
+        if !ply.DrawAlpha then ply.DrawAlpha = 0 end
+        if !ply.Delay then ply.Delay = 0 end
+            
+        if ply.BlurryShockTired then 
+            ply.AddAlpha = 0.2 * ply.Index / ply.Step
+            ply.DrawAlpha = 0.99 * ply.Index / ply.Step
+            ply.Delay = 0.05 * ply.Index / ply.Step
+        else
+            ply.AddAlpha = math.Clamp(ply.AddAlpha + curTime * 0.4, 0.2, 1)
+            ply.DrawAlpha = math.Clamp(ply.DrawAlpha - curTime * 0.4, 0, 0.99)
+            ply.Delay = math.Clamp(ply.Delay - curTime * 0.4, 0, 0.05)
+        end
+        
+        DrawMotionBlur( ply.AddAlpha, ply.DrawAlpha, ply.Delay )
+    end
+
+    hook.Add("RenderScreenspaceEffects","ShockEffectTired",ShockEffectTired)
+end
+
 -- Function called to remove an blurry vision on the client side.
 function SendResetBlurryVisionTired(victim)
 	net.Start(ResetBlurryVisionTired)
@@ -143,3 +196,6 @@ end
 
 hook.Add( "PlayerDeath", "PlayerDeath.RemoveTiredEffectGunTranquilizer", RemoveEffectGettingTired )
 hook.Add( "PlayerChangedTeam", "PlayerChangedTeam.RemoveTiredEffectGunTranquilizer", RemoveEffectGettingTired )
+hook.Add("canSleep", "canSleep.tranquilizer_dart.can_wake_up", function (ply)
+	if (ply.Sleeping and (ply.TranquilizedByDart or ply.IsTired)) then return false, "Tu es sous l'effet d'une drogue." end
+end)
