@@ -44,7 +44,7 @@ local function SetSleepPlayer(victim, timeToGetTired, timeToSleep, step, tableTe
 					-- When a player spawns, his movement speed cannot be changed immediately afterwards.
 					timer.Simple(0.1, function ()
 						if !IsValid(victim) then return end
-						victim:Say("/me "..BIBI.Translate( "woke_up" ))
+						victim:Say("/me "..TranslateTranquilizer( "woke_up" ))
 						victim:SetWalkSpeed(1)
 						victim:SetRunSpeed(1)
 						timer.Simple(5, function ()
@@ -101,10 +101,10 @@ function ENT:Touch(ent)
 		!ent.MaskControl) then
 			self:EmitSound("physics/flesh/flesh_impact_bullet"..math.random(1,5)..".wav", 95, 100)
 			local PrintTired = {
-				[1] = BIBI.Translate( "state_sleep_1" ),
-				[2] = BIBI.Translate( "state_sleep_2" ),
-				[3] = BIBI.Translate( "state_sleep_3" ),
-				[4] = BIBI.Translate( "state_sleep_4" ),
+				[1] = TranslateTranquilizer( "state_sleep_1" ),
+				[2] = TranslateTranquilizer( "state_sleep_2" ),
+				[3] = TranslateTranquilizer( "state_sleep_3" ),
+				[4] = TranslateTranquilizer( "state_sleep_4" ),
 			}
 			SetSleepPlayer(ent, 60, 60, 4, PrintTired, 1)
 			self:SetParent( ent )

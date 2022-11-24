@@ -1,11 +1,10 @@
-LANGUAGE = {}
-BIBI = {}
-HandledLanguage = {
+LANGUAGE_TRANQUILIZER = {}
+local HandledLanguage = {
     "fr",
     "en"
 }
 -- Get the current language of the user
-langUser = GetConVar("gmod_language"):GetString()
+local langUser = GetConVar("gmod_language"):GetString()
 cvars.AddChangeCallback("gmod_language", function(name, old, new)
     langUser = new
 end)
@@ -20,8 +19,8 @@ end
 include( "languages/" .. langUser .. ".lua" )
 if SERVER then AddCSLuaFile( "languages/" .. langUser .. ".lua" ) end
 
-assert( LANGUAGE, "[Tranquilizer Gun] Language not found" )
+assert( LANGUAGE_TRANQUILIZER, "[Tranquilizer Gun] Language not found" )
 
-function BIBI.Translate( trans, ... )
-	return string.format( LANGUAGE[ trans ] or trans, ... )
+function TranslateTranquilizer( trans, ... )
+	return string.format( LANGUAGE_TRANQUILIZER[ trans ] or trans, ... )
 end
