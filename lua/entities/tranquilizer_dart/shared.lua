@@ -16,11 +16,11 @@
 
 ENT.Type = "anim"
 ENT.Base = "base_gmodentity"
-ENT.Author = "BIBI"
-ENT.PrintName= "Fléchette tranquilizante"
+ENT.Author = "MrMarrant"
+ENT.PrintName= "Tranquilizer Dart"
 ENT.Spawnable = true
-ENT.AdminSpawnable = false
-ENT.Category = "BIBI entities"
+ENT.AdminSpawnable = true
+ENT.Category = "Tranquilizer Gun"
 ENT.ID = "tranquilizer-dart"
 
 if (SERVER) then
@@ -106,5 +106,5 @@ end
 hook.Add( "PlayerDeath", "PlayerDeath.RemoveTiredEffectGunTranquilizer", RemoveEffectGettingTired )
 hook.Add( "PlayerChangedTeam", "PlayerChangedTeam.RemoveTiredEffectGunTranquilizer", RemoveEffectGettingTired )
 hook.Add("canSleep", "canSleep.tranquilizer_dart.can_wake_up", function (ply)
-	if (ply.Sleeping and (ply.TranquilizedByDart or ply.IsTired)) then return false, "Tu es sous l'effet d'une drogue." end
+	if ((ply.Sleeping and ply.TranquilizedByDart) or ply.IsTired) then return false, tranquilizer_gun.TranslateLanguage(TRANQUILIZER_GUN_LANG, "cant_sleep" ) end
 end)

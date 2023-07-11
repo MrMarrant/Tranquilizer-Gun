@@ -55,12 +55,12 @@ local function SetSleepPlayer(victim, timeToGetTired, timeToSleep, step, tableTe
 			DarkRP.toggleSleep(victim)
 			timer.Create("getting_sleepy_"..victim:SteamID(), timeToSleep, 1, function()
 				if victim.TranquilizedByDart and IsValid(victim) then
-					DarkRP.toggleSleep(victim,"wake")
 					victim.TranquilizedByDart = false
+					DarkRP.toggleSleep(victim, "wake")
 					-- When a player spawns, his movement speed cannot be changed immediately afterwards.
 					timer.Simple(0.1, function ()
 						if !IsValid(victim) then return end
-						victim:Say("/me "..tranquilizer_gun.TranslateLanguage(TRANQUILIZER_GUN_CONFIG, "woke_up" ))
+						victim:Say("/me "..tranquilizer_gun.TranslateLanguage(TRANQUILIZER_GUN_LANG, "woke_up" ))
 						victim:SetWalkSpeed(1)
 						victim:SetRunSpeed(1)
 						timer.Simple(5, function ()
@@ -84,7 +84,6 @@ function ENT:Initialize()
 	self:SetSolid( SOLID_VPHYSICS ) 
 	self:SetUseType(SIMPLE_USE)
 	self.IsTouch = false
-	--! TODO : A virer ou à remplacer par une ConVar avec possibilité de le modifier dans le menu des props (Non utilisé pour le moment)
 	self.jobNotAffected = { ---- Jobs that are not affected by the tranquilizer.
 	
 	"SCP 999",
@@ -108,21 +107,22 @@ end
 function ENT:Touch(ent)
 	if (!self.IsTouch) then
 		self:SetMoveType( MOVETYPE_NONE )
+		self:SetSolid(SOLID_NONE)
 		self.IsTouch = true
 		-- Check if the player is not already tired or SCP 035.
 		if (
 		ent:IsPlayer() and
-		-- !table.HasValue(self.jobNotAffected, team.GetName( ent:Team() )) and 
+		!table.HasValue(self.jobNotAffected, team.GetName( ent:Team() )) and 
 		!ent.IsTired and 
 		!ent.MaskControl) then
 			self:EmitSound("physics/flesh/flesh_impact_bullet"..math.random(1,5)..".wav", 95, 100)
 			local PrintTired = {
-				[1] = tranquilizer_gun.TranslateLanguage(TRANQUILIZER_GUN_CONFIG, "state_sleep_1" ),
-				[2] = tranquilizer_gun.TranslateLanguage(TRANQUILIZER_GUN_CONFIG, "state_sleep_2" ),
-				[3] = tranquilizer_gun.TranslateLanguage(TRANQUILIZER_GUN_CONFIG, "state_sleep_3" ),
-				[4] = tranquilizer_gun.TranslateLanguage(TRANQUILIZER_GUN_CONFIG, "state_sleep_4" ),
+				[1] = tranquilizer_gun.TranslateLanguage(TRANQUILIZER_GUN_LANG, "state_sleep_1" ),
+				[2] = tranquilizer_gun.TranslateLanguage(TRANQUILIZER_GUN_LANG, "state_sleep_2" ),
+				[3] = tranquilizer_gun.TranslateLanguage(TRANQUILIZER_GUN_LANG, "state_sleep_3" ),
+				[4] = tranquilizer_gun.TranslateLanguage(TRANQUILIZER_GUN_LANG, "state_sleep_4" ),
 			}
-			SetSleepPlayer(ent, TRANQUILIZER_GUN_CONFIG.TimeToGetTired, TRANQUILIZER_GUN_CONFIG.TimeToSleep, 4, PrintTired, 1)
+			SetSleepPlayer(ent, TRANQUILIZER_GUN_CONFIG.TimeToGetTired:GetInt(), TRANQUILIZER_GUN_CONFIG.TimeToSleep:GetInt(), 4, PrintTired, 1)
 			self:SetParent( ent )
 			timer.Simple(5, function ()
 				self:Remove()

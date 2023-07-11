@@ -1,5 +1,0 @@
-LANGUAGE_TRANQUILIZER.woke_up = "wakes up and takes a few seconds to come to his senses."
-LANGUAGE_TRANQUILIZER.state_sleep_1 = "feels heavy and tired."
-LANGUAGE_TRANQUILIZER.state_sleep_2 = "has difficulty walking."
-LANGUAGE_TRANQUILIZER.state_sleep_3 = "tries to resist sleep."
-LANGUAGE_TRANQUILIZER.state_sleep_4 = "falls deeply asleep."

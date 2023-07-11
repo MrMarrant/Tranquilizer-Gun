@@ -14,16 +14,11 @@
 -- You should have received a copy of the GNU General Public License
 -- along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-TRANQUILIZER_GUN_CONFIG.LangServer = GetConVar("gmod_language"):GetString()
-TRANQUILIZER_GUN_CONFIG.HandledLanguage = {
-    "fr",
-    "en",
-}
+TRANQUILIZER_GUN_LANG.en = {}
 
--- Get Lang of the server
-cvars.AddChangeCallback("gmod_language", function(name, old, new)
-    TRANQUILIZER_GUN_CONFIG.LangServer = new
-end)
-
-tranquilizer_gun.LoadLanguage(TRANQUILIZER_GUN_CONFIG.RootFolder.."language/", TRANQUILIZER_GUN_CONFIG.HandledLanguage, TRANQUILIZER_GUN_LANG)
-tranquilizer_gun.LoadDirectory(TRANQUILIZER_GUN_CONFIG.RootFolder.."shared/")
+TRANQUILIZER_GUN_LANG.en.woke_up = "wakes up and takes a few seconds to come to his senses."
+TRANQUILIZER_GUN_LANG.en.cant_sleep = "You're on drugs."
+TRANQUILIZER_GUN_LANG.en.state_sleep_1 = "feels heavy and tired."
+TRANQUILIZER_GUN_LANG.en.state_sleep_2 = "has difficulty walking."
+TRANQUILIZER_GUN_LANG.en.state_sleep_3 = "tries to resist sleep."
+TRANQUILIZER_GUN_LANG.en.state_sleep_4 = "falls deeply asleep."

@@ -14,7 +14,27 @@
 -- You should have received a copy of the GNU General Public License
 -- along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-if CLIENT then return end
+TRANQUILIZER_GUN_CONFIG.LangServer = GetConVar("gmod_language"):GetString()
+TRANQUILIZER_GUN_CONFIG.HandledLanguage = {
+    "fr",
+    "en",
+}
 
-TRANQUILIZER_GUN_CONFIG.TimeToGetTired = CreateConVar( "time_to_get_tired_tranquilized", 1, FCVAR_PROTECTED, "The timer total for a player to be fatigu before sleep in second.", 4, 600 )
-TRANQUILIZER_GUN_CONFIG.TimeToSleep = CreateConVar( "time_to_sleep_tranquilized", 1, FCVAR_PROTECTED, "The timer total a player sleep when tranquilized in second.", 1, 600 )
+-- Get Lang of the server
+cvars.AddChangeCallback("gmod_language", function(name, old, new)
+    TRANQUILIZER_GUN_CONFIG.LangServer = new
+end)
+
+game.AddAmmoType( {
+	name = "tranquilizer_flechette",
+	dmgtype = DMG_BULLET,
+	tracer = TRACER_NONE,
+	plydmg = 0,
+	npcdmg = 0,
+	force = 0,
+	minsplash = 0,
+	maxsplash = 0
+} )
+
+tranquilizer_gun.LoadLanguage(TRANQUILIZER_GUN_CONFIG.RootFolder.."language/", TRANQUILIZER_GUN_CONFIG.HandledLanguage, TRANQUILIZER_GUN_LANG)
+tranquilizer_gun.LoadDirectory(TRANQUILIZER_GUN_CONFIG.RootFolder.."shared/")

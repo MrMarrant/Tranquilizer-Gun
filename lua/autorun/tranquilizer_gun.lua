@@ -62,5 +62,6 @@ function tranquilizer_gun.LoadDirectory(pathFolder, isFile)
 end
 
 print("Tranquilizer Gun Loading . . .")
-real_garbage.LoadDirectory(TRANQUILIZER_GUN_CONFIG.RootFolder.."config/sh_tranquiizer_gun_config.lua", true)
+tranquilizer_gun.LoadDirectory(TRANQUILIZER_GUN_CONFIG.RootFolder.."config/sh_tranquilizer_gun_config.lua", true)
+tranquilizer_gun.LoadDirectory(TRANQUILIZER_GUN_CONFIG.RootFolder.."config/sv_tranquilizer_gun_config.lua", true)
 print("Tranquilizer Gun Loaded!")

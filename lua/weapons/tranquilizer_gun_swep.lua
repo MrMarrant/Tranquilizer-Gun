@@ -74,16 +74,6 @@ SWEP.MoveDispersion = 150 -- inaccuracy added by moving. Applies in sights as we
 SWEP.SightsDispersion = 0 -- dispersion that remains even in sights
 SWEP.JumpDispersion = 300 -- dispersion penalty when in the air
 
-game.AddAmmoType( {
-	name = "tranquilizer_flechette",
-	dmgtype = DMG_BULLET,
-	tracer = TRACER_NONE,
-	plydmg = 0,
-	npcdmg = 0,
-	force = 0,
-	minsplash = 0,
-	maxsplash = 0
-} )
 SWEP.Primary.Ammo = "tranquilizer_flechette" -- what ammo type the gun uses
 
 SWEP.ShootVol = 110 -- volume of shoot sound
