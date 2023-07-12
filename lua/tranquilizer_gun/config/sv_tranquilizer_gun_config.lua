@@ -16,5 +16,5 @@
 
 if CLIENT then return end
 
-TRANQUILIZER_GUN_CONFIG.TimeToGetTired = CreateConVar( "time_to_get_tired_tranquilized", 60, {FCVAR_PROTECTED}, "The timer total for a player to be fatigu before sleep in second.", 4, 600 )
-TRANQUILIZER_GUN_CONFIG.TimeToSleep = CreateConVar( "time_to_sleep_tranquilized", 60, {FCVAR_PROTECTED}, "The timer total a player sleep when tranquilized in second.", 1, 600 )
+TRANQUILIZER_GUN_CONFIG.TimeToGetTired = CreateConVar( "time_to_get_tired_tranquilized", 60, {FCVAR_PROTECTED, FCVAR_ARCHIVE}, "The timer total for a player to be fatigu before sleep in second.", 4, 600 )
+TRANQUILIZER_GUN_CONFIG.TimeToSleep = CreateConVar( "time_to_sleep_tranquilized", 60, {FCVAR_PROTECTED, FCVAR_ARCHIVE}, "The timer total a player sleep when tranquilized in second.", 1, 600 )
