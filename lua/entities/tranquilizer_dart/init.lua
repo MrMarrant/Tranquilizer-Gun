@@ -84,20 +84,6 @@ function ENT:Initialize()
 	self:SetSolid( SOLID_VPHYSICS ) 
 	self:SetUseType(SIMPLE_USE)
 	self.IsTouch = false
-	self.jobNotAffected = { ---- Jobs that are not affected by the tranquilizer.
-	
-	"SCP 999",
-	"SCP 131",
-	"SCP 049",
-	"SCP 096",
-	"SCP 457",
-	"SCP 079",
-	"SCP 205",
-	"SCP 173",
-	"SCP 106",
-	"SCP 682",
-	"SCP 1048",
-}
 	local phys = self:GetPhysicsObject()
 	if (phys:IsValid()) then
 		phys:Wake()
@@ -112,7 +98,7 @@ function ENT:Touch(ent)
 		-- Check if the player is not already tired or SCP 035.
 		if (
 		ent:IsPlayer() and
-		!table.HasValue(self.jobNotAffected, team.GetName( ent:Team() )) and 
+		!table.HasValue(TRANQUILIZER_GUN_CONFIG.jobNotAffected, team.GetName( ent:Team() )) and 
 		!ent.IsTired and 
 		!ent.MaskControl) then
 			self:EmitSound("physics/flesh/flesh_impact_bullet"..math.random(1,5)..".wav", 95, 100)

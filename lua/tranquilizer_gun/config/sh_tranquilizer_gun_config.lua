@@ -36,5 +36,30 @@ game.AddAmmoType( {
 	maxsplash = 0
 } )
 
+TRANQUILIZER_GUN_CONFIG.jobNotAffected = { ---- Jobs that are not affected by the tranquilizer.
+	"SCP 999",
+	"SCP 131",
+	"SCP 049",
+	"SCP 096",
+	"SCP 457",
+	"SCP 079",
+	"SCP 205",
+	"SCP 173",
+	"SCP 106",
+	"SCP 682",
+	"SCP 1048",
+	"Soldat Mastodonte",
+	"IAA",
+	"UIAA",
+	"UIAA Lourde",
+	"Mastodonte FIM",
+	"SDC (spécialiste du confinement)",
+	"Soldat Mastodonte",
+	"SCP 1370",
+	"SCP 073",
+	"SCP 006fr",
+	"Membre du personnel Process"
+}
+
 tranquilizer_gun.LoadLanguage(TRANQUILIZER_GUN_CONFIG.RootFolder.."language/", TRANQUILIZER_GUN_CONFIG.HandledLanguage, TRANQUILIZER_GUN_LANG)
 tranquilizer_gun.LoadDirectory(TRANQUILIZER_GUN_CONFIG.RootFolder.."shared/")
